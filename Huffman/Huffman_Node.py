@@ -94,7 +94,7 @@ class Huffman_Node:
             right_bits, right_bit_length = Huffman_Node.__put_bit(bytearray(current_bits), 1, current_bit_length) # Node Right
             self.right.__create_node_dict(dict, current_deep + 1, right_bits, right_bit_length)
         else:
-            dict[self.value] = (current_bits[-(current_deep >> 3):], current_deep)
+            dict[self.value] = (current_bits, current_deep)
         return dict
 
     def Encode_Data(self: 'Huffman_Node', bytes_array: bytearray = bytearray()) -> Tuple[bytearray, int]:
