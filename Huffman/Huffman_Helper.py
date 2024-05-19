@@ -6,6 +6,7 @@ Discord: thebestyea
 
 from typing import Tuple
 from .Huffman_Node import Huffman_Node
+import base64
 
 class Huffman_Helper:
     @staticmethod
@@ -42,6 +43,12 @@ class Huffman_Helper:
         tree_bytes = bytearray([0 if (total_bit_length & 0x7) == 0 else 0x8 - (total_bit_length & 0x7)]) + tree_bytes
         return encoded_data, tree_bytes
 
-    def Decode(encoded_data: bytearray, tree_bytes: bytearray):
+    def Decode(encoded_data: bytearray, tree_bytes: bytearray) -> bytearray:
         tree = Huffman_Node.Decode_To_Nodes(tree_bytes)
         return tree.Decode_Data(encoded_data)
+
+    def Compress_Data(data: bytearray) -> Tuple[bytearray, bytearray]:
+        return Huffman_Helper.Encode(base64.b64encode(data))
+
+    def Decompress_Data(compressed_data: bytearray, tree_bytes: bytearray) -> bytearray:
+        return base64.b64decode(Huffman_Helper.Decode(compressed_data, tree_bytes))
